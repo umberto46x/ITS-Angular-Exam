@@ -1,16 +1,19 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from "./components/navbar/navbar.component";
 
 @Component({
   selector: 'umberto46-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NavbarComponent],
   template: `
-    <h1>Welcome to {{title}}!</h1>
 
-    <router-outlet />
+  <umberto46-navbar />
+<main class="container mt-4">
+  <router-outlet />
+</main>
   `,
   styles: [],
 })
 export class AppComponent {
-  title = 'ITS-Angular-Exam';
+   title = 'Pizzeria';
 }

@@ -1,56 +1,80 @@
 
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Pizza, CartItem } from './pizza.service';
+import {
+  Injectable,
+  signal,
+  computed,
+  WritableSignal,
+  Signal,
+} from '@angular/core';
+import { Pizza } from './pizza.service';
+
+export interface CartItem {
+  pizza: Pizza;
+  quantity: number;
+}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
+
+
 export class CartService {
- 
-  private cartItems = new BehaviorSubject<CartItem[]>([]);
+  private _cartItems: WritableSignal<CartItem[]> = signal([]);
+  cartItems: Signal<CartItem[]> = this._cartItems.asReadonly();
+
+  total: Signal<number> = computed(() => {
+    return this.cartItems().reduce(
+      (sum, item) => sum + item.pizza.price * item.quantity,
+      0
+    );
+  });
+
+  cartItemCount: Signal<number> = computed(() => {
+    return this.cartItems().reduce((sum, item) => sum + item.quantity, 0);
+  });
 
 
-  cartItems$ = this.cartItems.asObservable();
-
-  constructor() { }
 
   addToCart(pizzaToAdd: Pizza, quantity: number = 1) {
-    const currentItems = this.cartItems.getValue();
-    const existingItem = currentItems.find(item => item.pizza.id === pizzaToAdd.id);
-     if (existingItem) {
-      existingItem.quantity += quantity;
-    } else {
-      currentItems.push({ pizza: pizzaToAdd, quantity: quantity });
-    }
-    this.cartItems.next([...currentItems]);
-  }
+    this._cartItems.update((currentItems) => {
+      const existingItem = currentItems.find(
+        (item) => item.pizza.id === pizzaToAdd.id
+      );
 
-removeItemFromCart(pizzaId: number) {
-    let currentItems = this.cartItems.getValue();
-    currentItems = currentItems.filter(item => item.pizza.id !== pizzaId);
-    this.cartItems.next([...currentItems]);
-  }
-
-updateItemQuantity(pizzaId: number, newQuantity: number) {
-    const currentItems = this.cartItems.getValue();
-    const itemToUpdate = currentItems.find(item => item.pizza.id === pizzaId);
-
-    if (itemToUpdate) {
-      if (newQuantity <= 0) {
-        this.removeItemFromCart(pizzaId);
+      if (existingItem) {
+        existingItem.quantity += quantity;
       } else {
-        itemToUpdate.quantity = newQuantity;
-        this.cartItems.next([...currentItems]); 
+        currentItems.push({ pizza: pizzaToAdd, quantity: quantity });
       }
-    }
+
+      return [...currentItems];
+    });
   }
 
-  getCartItems(): CartItem[] {
-    return this.cartItems.getValue();
+  removeItemFromCart(pizzaId: number) {
+    this._cartItems.update((currentItems) => {
+      return currentItems.filter((item) => item.pizza.id !== pizzaId);
+    });
+  }
+
+  updateItemQuantity(pizzaId: number, newQuantity: number) {
+    this._cartItems.update((currentItems) => {
+      const itemToUpdate = currentItems.find(
+        (item) => item.pizza.id === pizzaId
+      );
+
+      if (itemToUpdate) {
+        if (newQuantity <= 0) {
+          return currentItems.filter((item) => item.pizza.id !== pizzaId);
+        } else {
+          itemToUpdate.quantity = newQuantity;
+        }
+      }
+      return [...currentItems];
+    });
   }
 
   clearCart() {
-    this.cartItems.next([]);
+    this._cartItems.set([]);
   }
 }

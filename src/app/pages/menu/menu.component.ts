@@ -8,7 +8,7 @@ import { Pizza, PizzaService } from '../../services/pizza.service';
   selector: 'umberto46-menu',
   imports: [CommonModule, PizzaCardComponent],
   template: `
-     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 container">
       <div class="col" *ngFor="let pizza of pizzas">
         <umberto46-pizza-card
           [pizzaData]="pizza"
@@ -26,7 +26,7 @@ pizzas: Pizza[] = [];
     private pizzaService: PizzaService,
     private cartService: CartService
   ) {}
- 
+
 
   ngOnInit(): void {
     this.pizzaService.getPizzas().subscribe(data => {

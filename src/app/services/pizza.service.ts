@@ -12,10 +12,7 @@ export interface Pizza {
   description: string;
 }
 
-export interface CartItem {
-  pizza: Pizza;
-  quantity: number;
-}
+
 
 @Injectable({
   providedIn: 'root'

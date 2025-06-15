@@ -24,11 +24,10 @@ export class PizzaService {
 
   getPizzas(): Observable<Pizza[]> {
     return this.http.get<Pizza[]>(this.apiUrl);
+
   }
 
   getPizzaById(id: number): Observable<Pizza | undefined> {
-    return this.getPizzas().pipe(
-      map(pizzas => pizzas.find(p => p.id === id))
-    );
+    return this.http.get<Pizza>(this.apiUrl+ `/${id}`)
   }
 }

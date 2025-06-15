@@ -38,8 +38,5 @@ export class MenuComponent implements OnInit {
 
   onAddToCart(event: { pizza: Pizza; quantity: number }) {
     this.cartService.addToCart(event.pizza, event.quantity);
-    console.log(
-      `${event.pizza.name} (x${event.quantity}) aggiunta al carrello!`
-    );
   }
 }

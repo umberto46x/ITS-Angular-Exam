@@ -82,7 +82,7 @@ import { CartItem, CartService } from '../../services/cart.service';
           </li>
         </ul>
         <div
-          class="card-footer d-flex flex-column flex-md-row justify-content-between align-items-center p-4 bg-light rounded-bottom-4"
+          class="bg-white d-flex flex-column flex-md-row justify-content-between align-items-center p-4 bg-light rounded-bottom-4"
         >
           <h4 class="mb-3 mb-md-0">
             Totale:
@@ -237,14 +237,7 @@ import { CartItem, CartService } from '../../services/cart.service';
     ></div>
   `,
   styles: `
-
-
-
-
-
-  .card-footer {
-    background-color: #f8f9fa !important;
-  }`,
+  `,
 })
 export class CartComponent {
   cartItems: Signal<CartItem[]>;

@@ -10,8 +10,8 @@ import { FooterComponent } from "./components/footer/footer.component";
     <umberto46-navbar />
     <main class="container mt-4">
       <router-outlet />
-      <umberto46-footer />
     </main>
+    <umberto46-footer />
   `,
   styles: [],
 })

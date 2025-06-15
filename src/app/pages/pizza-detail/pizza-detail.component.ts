@@ -8,112 +8,113 @@ import { CartService } from '../../services/cart.service';
   selector: 'umberto46-pizza-detail',
   imports: [CommonModule, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div class="container py-4">
-    <div *ngIf="pizza; else notFound" class="card shadow-lg rounded-4">
-      <div class="row g-0">
-        <div class="col-md-6">
-          <img
-            [src]="pizza.image"
-            [alt]="pizza.name"
-            class="img-fluid rounded-start-4 detail-img"
-          />
-        </div>
-        <div class="col-md-6 d-flex flex-column p-4">
-          <h1 class="card-title display-4 fw-bold text-primary mb-3">
-            {{ pizza.name }}
-          </h1>
-          <p class="lead text-muted flex-grow-1">
-            {{
-              pizza.description ||
-                'Nessuna descrizione disponibile per questa deliziosa pizza. È fatta con i migliori ingredienti freschi!'
-            }}
-          </p>
-          <h3 class="text-success fs-2 mb-4">
-            {{ pizza.price | currency : 'EUR' }}
-          </h3>
+  template: ` <div class="container   py-4 ">
+                  <div *ngIf="isLoading" class="d-flex justify-content-center pt-5">
+                  <div
+                    class="spinner-border text-success"
+                    style="width: 3rem; height: 3rem;"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Caricamento...</span>
+                  </div>
+                  </div>
+                  <div *ngIf="!isLoading && pizza" class="card shadow-lg rounded-4 ">
+                  <div class="row g-0">
+                    <div class="col-md-6">
+                      <img
+                        [src]="pizza.image"
+                        [alt]="pizza.name"
+                        class="img-fluid rounded-start-4 detail-img"
+                      />
+                    </div>
+                    <div class="col-md-6 d-flex flex-column p-4">
+                      <h1 class="card-title display-4 fw-bold text-danger mb-3 text-center">
+                        {{ pizza.name }}
+                      </h1>
+                      <p class=" fs-4 flex-grow-1 text-center">
+                        {{
+                          pizza.description ||
+                            'Nessuna descrizione disponibile per questa deliziosa pizza. È fatta con i migliori ingredienti freschi!'
+                        }}
+                      </p>
+                      <h3 class="text-danger fs-2 mb-4 text-center">
+                        {{ pizza.price | currency : 'EUR' }}
+                      </h3>
 
-          <div class="d-flex align-items-center mb-4">
-            <div class="input-group w-auto me-4">
-              <button
-                class="btn btn-outline-secondary rounded-start-pill px-3"
-                type="button"
-                (click)="decrementQuantity()"
-              >
-                -
-              </button>
-              <input
-                type="text"
-                class="form-control text-center quantity-input"
-                [value]="pizzaQuantity"
-                readonly
-                style="width: 60px;"
-              />
-              <button
-                class="btn btn-outline-secondary rounded-end-pill px-3"
-                type="button"
-                (click)="incrementQuantity()"
-              >
-                +
-              </button>
-            </div>
-            <button
-              class="btn btn-success btn-lg rounded-pill px-5 py-3 shadow-sm"
-              (click)="addToCart()"
-            >
-              <i class="bi bi-cart-plus-fill me-2"></i> Aggiungi al Carrello
-            </button>
-          </div>
+                      <div
+                        class="d-flex align-items-center justify-content-center mb-4 mx-auto "
+                      >
+                        <div class=" d-flex justify-content-center flex-column  me-4">
+                          <button
+                            class="btn btn-success fs-4 rounded-top-4 p-2    "
+                            type="button"
+                            (click)="incrementQuantity()"
+                          >
+                            +
+                          </button>
+                          <input
+                            type="text"
+                            class="form-control text-center p-2  "
+                            [value]="pizzaQuantity"
+                            readonly
+                          />
+                          <button
+                            class="btn btn-danger fs-4 rounded-bottom-4 p-2  "
+                            type="button"
+                            (click)="decrementQuantity()"
+                          >
+                            -
+                          </button>
+                        </div>
+                        <button
+                          class="btn btn-success  rounded-pill p-3 shadow-sm "
+                          (click)="addToCart()"
+                        >
+                          <i class="bi bi-cart-plus-fill me-2"></i> Aggiungi al Carrello
+                        </button>
+                      </div>
 
-          <div
-            *ngIf="showAddedToCartMessage"
-            class="alert alert-success mt-3 animated-alert"
-            role="alert"
-          >
-            <i class="bi bi-check-circle-fill me-2"></i> Pizza aggiunta al
-            carrello!
-          </div>
+                      <div
+                        *ngIf="showAddedToCartMessage"
+                        class="alert alert-success mt-3 w-50  animated-alert text-center position-absolute top-50 end-25 "
+                        role="alert"
+                      >
+                        <i class="bi bi-check-circle-fill me-2"></i> Pizza aggiunta al
+                        carrello!
+                      </div>
 
-          <div class="mt-auto pt-3 border-top">
-            <button
-              class="btn btn-outline-primary rounded-pill px-4 py-2"
-              (click)="goBack()"
-            >
-              <i class="bi bi-arrow-left-circle-fill me-2"></i> Torna al Menu
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+                      <div class="mt-auto pt-3 border-top mx-auto">
+                        <button
+                          class="btn  btn-success rounded-pill px-4 py-2"
+                          (click)="goBack()"
+                        >
+                          <i class="bi bi-arrow-left-circle-fill me-2"></i> Torna al Menu
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                  <div *ngIf="!isLoading && !pizza" class="text-center p-5 card shadow-sm rounded-4 mt-4">
+                    <div class="display-1 mb-3">❓</div>
+                    <h3 class="text-danger">Ops! Pizza non trovata.</h3>
+                    <p class="lead text-muted fs-5">
+                      Sembra che la pizza che stai cercando non sia nel nostro menu.
+                    </p>
+                    <a
+                      routerLink="/menu"
+                      class="btn btn-success btn-lg mt-3 rounded-pill px-4 py-2"
+                    >
+                        <i class="bi bi-arrow-left-circle-fill me-2"></i> Vai al Menu
+                      </a>
 
-    <ng-template #notFound>
-      <div class="text-center p-5 card shadow-sm rounded-4 mt-4">
-        <div class="display-1 mb-3">❓</div>
-        <h3>Ops! Pizza non trovata.</h3>
-        <p class="lead text-muted">
-          Sembra che la pizza che stai cercando non sia nel nostro menu.
-        </p>
-        <a
-          routerLink="/menu"
-          class="btn btn-primary btn-lg mt-3 rounded-pill px-4 py-2"
-        >
-          <i class="bi bi-arrow-left-circle-fill me-2"></i> Vai al Menu
-        </a>
-      </div>
-    </ng-template>
-  </div> `,
+                  </div>
+              </div> `,
   styles: ` .detail-img {
     height: 100%;
     object-fit: cover;
   }
-  .quantity-input {
-    -moz-appearance: textfield;
-  }
-  .quantity-input::-webkit-outer-spin-button,
-  .quantity-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  /* Stili per l'animazione del messaggio */
+
+
   .animated-alert {
     animation: fadeinout 3s forwards;
   }
@@ -121,13 +122,15 @@ import { CartService } from '../../services/cart.service';
     0% { opacity: 0; transform: translateY(-10px); }
     10% { opacity: 1; transform: translateY(0); }
     90% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 0; transform: translateY(-10px); display: none; }
   }`,
 })
 export class PizzaDetailComponent implements OnInit {
   pizza: Pizza | undefined;
   pizzaQuantity: number = 1;
   showAddedToCartMessage: boolean = false;
+  requestedPizzaId: string | null = null;
+  isLoading: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -137,12 +140,42 @@ export class PizzaDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      const pizzaId = Number(idParam);
-      this.pizzaService.getPizzaById(pizzaId).subscribe((data) => {
-        this.pizza = data as Pizza;
-      });
+    this.requestedPizzaId = this.route.snapshot.paramMap.get('id');
+    console.log('PizzaDetailComponent: ID dalla rotta:', this.requestedPizzaId);
+
+    if (this.requestedPizzaId) {
+      const pizzaId = +this.requestedPizzaId;
+      if (isNaN(pizzaId)) {
+        console.error(
+          'PizzaDetailComponent: ID della pizza non valido:',
+          this.requestedPizzaId
+        );
+        this.pizza = undefined;
+        this.isLoading = false;
+        return;
+      }
+
+      this.pizzaService.getPizzaById(pizzaId).subscribe(
+        (data) => {
+          this.pizza = data;
+          this.isLoading = false;
+          console.log('PizzaDetailComponent: Dati pizza ricevuti:', this.pizza);
+        },
+        (error) => {
+          console.error(
+            'PizzaDetailComponent: Errore nel recupero della pizza:',
+            error
+          );
+          this.pizza = undefined;
+          this.isLoading = false;
+        }
+      );
+    } else {
+      console.warn(
+        'PizzaDetailComponent: Nessun ID pizza trovato nella rotta.'
+      );
+      this.pizza = undefined;
+      this.isLoading = false;
     }
   }
 
@@ -164,6 +197,9 @@ export class PizzaDetailComponent implements OnInit {
       );
 
       this.showAddedToCartMessage = true;
+      setTimeout(() => {
+        this.showAddedToCartMessage = false;
+      }, 3000 );
       this.pizzaQuantity = 1;
     }
   }

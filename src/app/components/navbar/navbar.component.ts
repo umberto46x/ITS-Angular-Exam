@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   imports: [RouterLink, RouterLinkActive, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm fixed-top mb-5">
       <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" routerLink="/">
           <span class="fw-bold fs-3">🍕 Pizzeria Codice e Basilico</span>
@@ -86,6 +86,7 @@ import { CommonModule } from '@angular/common';
         </div>
       </div>
     </nav>
+    <div style="margin-bottom: 8rem;"></div>
   `,
   styles: ``,
 })

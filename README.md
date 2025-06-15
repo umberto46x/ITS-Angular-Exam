@@ -1,5 +1,7 @@
 # ITSAngularExam
 
+try it live at https://fluffy-profiterole-a053e4.netlify.app/
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
 
 ## Development server

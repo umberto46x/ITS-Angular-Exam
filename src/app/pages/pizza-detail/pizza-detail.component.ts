@@ -8,7 +8,7 @@ import { CartService } from '../../services/cart.service';
   selector: 'umberto46-pizza-detail',
   imports: [CommonModule, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: ` <div class="container   py-4 ">
+  template: ` <div class="container py-4 ">
                   <div *ngIf="isLoading" class="d-flex justify-content-center pt-5">
                   <div
                     class="spinner-border text-success"
@@ -85,7 +85,7 @@ import { CartService } from '../../services/cart.service';
 
                       <div class="mt-auto pt-3 border-top mx-auto">
                         <button
-                          class="btn  btn-success rounded-pill px-4 py-2"
+                          class="btn  btn-danger  rounded-pill px-4 py-2"
                           (click)="goBack()"
                         >
                           <i class="bi bi-arrow-left-circle-fill me-2"></i> Torna al Menu

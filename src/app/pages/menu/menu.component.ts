@@ -8,7 +8,10 @@ import { Pizza, PizzaService } from '../../services/pizza.service';
   selector: 'umberto46-menu',
   imports: [CommonModule, PizzaCardComponent],
   template: `
-     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 container">
+    <h2 class="text-center mb-4 display-5 fw-bold text-success">
+      Menu
+    </h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 container">
       <div class="col" *ngFor="let pizza of pizzas">
         <umberto46-pizza-card
           [pizzaData]="pizza"
@@ -17,25 +20,26 @@ import { Pizza, PizzaService } from '../../services/pizza.service';
       </div>
     </div>
   `,
-  styles: ``
+  styles: ``,
 })
 export class MenuComponent implements OnInit {
-pizzas: Pizza[] = [];
+  pizzas: Pizza[] = [];
 
   constructor(
     private pizzaService: PizzaService,
     private cartService: CartService
   ) {}
 
-
   ngOnInit(): void {
-    this.pizzaService.getPizzas().subscribe(data => {
+    this.pizzaService.getPizzas().subscribe((data) => {
       this.pizzas = data;
     });
   }
 
-   onAddToCart(event: { pizza: Pizza, quantity: number }) {
+  onAddToCart(event: { pizza: Pizza; quantity: number }) {
     this.cartService.addToCart(event.pizza, event.quantity);
-    console.log(`${event.pizza.name} (x${event.quantity}) aggiunta al carrello!`);
+    console.log(
+      `${event.pizza.name} (x${event.quantity}) aggiunta al carrello!`
+    );
   }
 }

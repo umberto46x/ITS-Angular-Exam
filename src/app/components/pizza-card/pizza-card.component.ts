@@ -24,7 +24,7 @@ import { Pizza } from '../../services/pizza.service';
         />
       </a>
       <div class="card-body d-flex flex-column">
-        <h5 class="card-title text-center mb-2">{{ pizzaData.name }}</h5>
+        <h5 class="card-title text-center mb-2 text-danger">{{ pizzaData.name }}</h5>
         <p class="card-text text-center text-muted flex-grow-1 fs-5">
           {{ pizzaData.description }}
         </p>

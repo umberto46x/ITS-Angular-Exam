@@ -10,7 +10,7 @@ import { CartItem, CartService } from '../../services/cart.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="container py-4">
-      <h2 class="text-center mb-4 display-5 fw-bold text-primary">
+      <h2 class="text-center mb-4 display-5 fw-bold text-success">
         Il tuo Carrello
       </h2>
 
@@ -27,12 +27,12 @@ import { CartItem, CartService } from '../../services/cart.service';
               <img
                 [src]="item.pizza.image"
                 [alt]="item.pizza.name"
-                class="rounded-3 me-3"
-                style="width: 80px; height: 80px; object-fit: cover; border: 1px solid #eee;"
+                class="rounded-3 me-4"
+                style="width: 100px; height: 100px; object-fit: cover;"
               />
               <div>
-                <h5 class="mb-1 fw-bold">{{ item.pizza.name }}</h5>
-                <small class="text-muted"
+                <h5 class="mb-1 fw-bold text-danger">{{ item.pizza.name }}</h5>
+                <small class="fs-5"
                   >{{ item.pizza.price | currency : 'EUR' }} ciascuno</small
                 >
               </div>
@@ -41,38 +41,42 @@ import { CartItem, CartService } from '../../services/cart.service';
               class="d-flex align-items-center flex-wrap justify-content-center"
             >
               <div
-                class="input-group input-group-sm me-3 mb-2 mb-md-0"
+                class="input-group input-group-sm me-3 mb-2 mb-md-0 mt-2 mt-md-0"
                 style="width: 120px;"
               >
                 <button
-                  class="btn btn-outline-secondary rounded-start-pill"
-                  type="button"
-                  (click)="decrementQuantity(item)"
-                >
-                  -
-                </button>
-                <input
-                  type="text"
-                  class="form-control text-center"
-                  [value]="item.quantity"
-                  readonly
-                />
-                <button
-                  class="btn btn-outline-secondary rounded-end-pill"
+                  class="btn btn-success rounded-start-pill p-2 fs-4 px-3 "
                   type="button"
                   (click)="incrementQuantity(item)"
                 >
                   +
                 </button>
+
+                <input
+                  type="text"
+                  class="form-control text-center p-2 fs-4     "
+                  [value]="item.quantity"
+                  readonly
+                />
+                <button
+                  class="btn btn-danger rounded-end-pill p-2 fs-4 px-3 "
+                  type="button"
+                  (click)="decrementQuantity(item)"
+                >
+                  -
+                </button>
               </div>
-              <strong class="text-success fs-5 me-3 mb-2 mb-md-0">{{
-                item.pizza.price * item.quantity | currency : 'EUR'
-              }}</strong>
+              <strong
+                class="text-success fs-5 me-3 mb-2 mb-md-0 mt-2 mt-md-0"
+                >{{
+                  item.pizza.price * item.quantity | currency : 'EUR'
+                }}</strong
+              >
               <button
-                class="btn btn-danger btn-sm rounded-pill px-3"
+                class="btn btn-danger btn-sm rounded-pill px-4 py-2  mt-2 mt-md-0"
                 (click)="removeItem(item.pizza.id)"
               >
-                <i class="bi bi-trash-fill me-1"></i> Rimuovi
+                <i class="bi bi-trash-fill me-1 "></i> Rimuovi
               </button>
             </div>
           </li>
@@ -88,7 +92,7 @@ import { CartItem, CartService } from '../../services/cart.service';
           </h4>
           <div class="d-flex flex-column flex-md-row align-items-center">
             <button
-              class="btn btn-warning btn-lg rounded-pill px-4 py-3 shadow-sm me-md-3 mb-3 mb-md-0"
+              class="btn btn-danger btn-lg rounded-pill px-4 py-3 shadow-sm me-md-3 mb-3 mb-md-0"
               (click)="openClearCartConfirmModal()"
             >
               <i class="bi bi-x-circle-fill me-2"></i> Svuota Carrello
@@ -107,13 +111,13 @@ import { CartItem, CartService } from '../../services/cart.service';
         <div class="text-center p-5 card shadow-sm rounded-4">
           <div class="display-1 mb-3">🛒</div>
           <h3>Il tuo carrello è vuoto!</h3>
-          <p class="lead text-muted">
+          <p class="lead text-muted fs-3">
             Aggiungi alcune delle nostre deliziose pizze per iniziare il tuo
             ordine.
           </p>
           <a
             routerLink="/menu"
-            class="btn btn-primary btn-lg mt-3 rounded-pill px-4 py-2"
+            class="btn btn-danger btn-lg mt-3 rounded-pill px-4 py-2"
           >
             <i class="bi bi-arrow-left-circle-fill me-2"></i> Vai al Menu
           </a>
@@ -134,7 +138,7 @@ import { CartItem, CartService } from '../../services/cart.service';
         <div class="modal-content rounded-4 shadow-lg border-0">
           <div class="modal-header border-bottom-0 pb-0">
             <h5
-              class="modal-title fs-5 fw-bold text-primary"
+              class="modal-title fs-5 fw-bold text-success"
               id="thankYouModalLabel"
             >
               🎉 Ordine Confermato!
@@ -159,7 +163,7 @@ import { CartItem, CartService } from '../../services/cart.service';
           <div class="modal-footer flex-column border-top-0 pt-0">
             <button
               type="button"
-              class="btn btn-lg btn-primary w-100 mx-0 mb-2 rounded-pill shadow-sm"
+              class="btn btn-lg btn-danger w-100 mx-0 mb-2 rounded-pill shadow-sm"
               (click)="closeThankYouModal()"
             >
               <i class="bi bi-house-door-fill me-2"></i> Torna alla Home
@@ -233,24 +237,11 @@ import { CartItem, CartService } from '../../services/cart.service';
     ></div>
   `,
   styles: `
-  .input-group-sm .form-control {
-    font-size: 0.875rem;
-    padding: 0.25rem 0.5rem;
-    height: calc(1.5em + 0.5rem + 2px);
-  }
-  .input-group-sm .btn {
-    padding: 0.25rem 0.5rem;
-  }
 
 
-  input[type="text"] {
-    -moz-appearance: textfield;
-  }
-  input[type="text"]::-webkit-outer-spin-button,
-  input[type="text"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+
+
+
   .card-footer {
     background-color: #f8f9fa !important;
   }`,

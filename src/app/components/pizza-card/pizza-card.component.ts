@@ -36,7 +36,7 @@ import { Pizza } from '../../services/pizza.service';
           </strong>
           <div class="input-group w-auto ">
             <button
-              class="btn btn-success fs-4 rounded-start-pill px-4"
+              class="btn btn-success fs-4 rounded-start-pill px-4 px-lg-3"
               type="button"
               (click)="
                 $event.preventDefault();
@@ -54,7 +54,7 @@ import { Pizza } from '../../services/pizza.service';
               style="width: 50px; border-color: #dee2e6;"
             />
             <button
-              class="btn btn-danger   fs-4 rounded-end-pill px-4 "
+              class="btn btn-danger   fs-4 rounded-end-pill px-4 px-lg-3  "
               type="button"
               (click)="
                 $event.preventDefault();

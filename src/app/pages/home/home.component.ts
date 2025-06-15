@@ -66,7 +66,7 @@ import { CommonModule } from '@angular/common';
           </div>
           <div class="carousel-item" data-bs-interval="5000">
             <img
-              src="ingredienti.webp"
+              src="ingredienti.jpg"
               class="d-block w-100 carousel-img"
               alt="[Image of Fresh ingredients]"
             />

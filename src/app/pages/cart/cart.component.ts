@@ -14,8 +14,7 @@ import { CartItem, CartService } from '../../services/cart.service';
         Il tuo Carrello
       </h2>
 
-      <div
-        *ngIf="cartItems().length > 0; else emptyCart"
+      <div *ngIf="cartItems().length > 0; else emptyCart"
         class="card shadow-lg rounded-4"
       >
         <ul class="list-group list-group-flush border-0">
@@ -45,7 +44,7 @@ import { CartItem, CartService } from '../../services/cart.service';
                 style="width: 120px;"
               >
                 <button
-                  class="btn btn-success rounded-start-pill p-2 fs-4 px-3 "
+                  class="btn btn-success rounded-start-pill p-2 fs-4 "
                   type="button"
                   (click)="incrementQuantity(item)"
                 >
@@ -54,12 +53,12 @@ import { CartItem, CartService } from '../../services/cart.service';
 
                 <input
                   type="text"
-                  class="form-control text-center p-2 fs-4     "
+                  class="form-control text-center p-2  fs-4     "
                   [value]="item.quantity"
                   readonly
                 />
                 <button
-                  class="btn btn-danger rounded-end-pill p-2 fs-4 px-3 "
+                  class="btn btn-danger rounded-end-pill p-2 fs-4"
                   type="button"
                   (click)="decrementQuantity(item)"
                 >

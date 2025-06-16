@@ -10,6 +10,7 @@ import { CartService } from '../../services/cart.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="container py-4 ">
+
       <div *ngIf="isLoading" class="d-flex justify-content-center pt-5">
         <div
           class="spinner-border text-success"
@@ -99,8 +100,7 @@ import { CartService } from '../../services/cart.service';
           </div>
         </div>
       </div>
-      <div
-        *ngIf="!isLoading && !pizza"
+      <div *ngIf="!isLoading && !pizza"
         class="text-center p-5 card shadow-sm rounded-4 mt-4"
       >
         <div class="display-1 mb-3">❓</div>
@@ -115,6 +115,7 @@ import { CartService } from '../../services/cart.service';
           <i class="bi bi-arrow-left-circle-fill me-2"></i> Vai al Menu
         </a>
       </div>
+
     </div>
   `,
   styles: ` .detail-img {

@@ -16,5 +16,5 @@ import { FooterComponent } from "./components/footer/footer.component";
   styles: [],
 })
 export class AppComponent {
-  title = 'Pizzeria';
+  title = 'Pizzeria Codice e Basilico';
 }

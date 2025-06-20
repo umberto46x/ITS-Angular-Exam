@@ -14,7 +14,7 @@ import { CartItem, CartService } from '../../services/cart.service';
         Il tuo Carrello
       </h2>
 
-      <div *ngIf="cartItems().length > 0; else emptyCart"
+      <div *ngIf="cartItems().length > 0"
         class="card shadow-lg rounded-4"
       >
         <ul class="list-group list-group-flush border-0">
@@ -106,8 +106,8 @@ import { CartItem, CartService } from '../../services/cart.service';
         </div>
       </div>
 
-      <ng-template #emptyCart>
-        <div class="text-center p-5 card shadow-sm rounded-4">
+
+        <div *ngIf="cartItems().length == 0"  class="text-center p-5 card shadow-sm rounded-4">
           <div class="display-1 mb-3">🛒</div>
           <h3>Il tuo carrello è vuoto!</h3>
           <p class="lead text-muted fs-3">
@@ -121,7 +121,7 @@ import { CartItem, CartService } from '../../services/cart.service';
             <i class="bi bi-arrow-left-circle-fill me-2"></i> Vai al Menu
           </a>
         </div>
-      </ng-template>
+
     </div>
 
     <div
@@ -191,7 +191,7 @@ import { CartItem, CartService } from '../../services/cart.service';
         <div class="modal-content rounded-4 shadow-lg border-0">
           <div class="modal-header border-bottom-0 pb-0">
             <h5
-              class="modal-title fs-5 fw-bold text-danger"
+              class="modal-title fs-5 fw-bold text-danger "
               id="clearCartModalLabel"
             >
               Attenzione!

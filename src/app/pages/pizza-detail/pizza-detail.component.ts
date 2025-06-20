@@ -37,8 +37,7 @@ import { CartService } from '../../services/cart.service';
             </h1>
             <p class=" fs-4 flex-grow-1 text-center">
               {{
-                pizza.description ||
-                  'Nessuna descrizione disponibile per questa deliziosa pizza. È fatta con i migliori ingredienti freschi!'
+                pizza.description
               }}
             </p>
             <h3 class="text-danger fs-2 mb-4 text-center">

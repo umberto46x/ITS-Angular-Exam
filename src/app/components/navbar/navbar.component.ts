@@ -44,7 +44,7 @@ import { CommonModule } from '@angular/common';
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon fs-4 "></span>
+            <span class="navbar-toggler-icon fs-2 "></span>
           </button>
         </div>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -63,7 +63,7 @@ import { CommonModule } from '@angular/common';
                 >Menu</a
               >
             </li>
-            <li class="nav-item d-sm-block d-none ">
+            <li class="nav-item d-none d-lg-block  ">
               <a
                 class="nav-link position-relative "
                 routerLink="/carrello"

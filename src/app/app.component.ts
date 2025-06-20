@@ -8,7 +8,7 @@ import { FooterComponent } from "./components/footer/footer.component";
   imports: [RouterOutlet, NavbarComponent, FooterComponent],
   template: `
     <umberto46-navbar />
-    <main class="container mt-4">
+    <main class="container-fluid mt-4">
       <router-outlet />
     </main>
     <umberto46-footer />

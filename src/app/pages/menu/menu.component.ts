@@ -11,7 +11,7 @@ import { Pizza, PizzaService } from '../../services/pizza.service';
     <h2 class="text-center mb-4 display-5 fw-bold text-success">
       Menu
     </h2>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 container mx-auto ">
       <div class="col" *ngFor="let pizza of pizzas">
         <umberto46-pizza-card
           [pizzaData]="pizza"

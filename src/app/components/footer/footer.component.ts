@@ -5,8 +5,9 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'umberto46-footer',
   imports: [CommonModule, RouterLink, RouterLinkActive],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <footer class=" bg-success text-white pt-5 pb-4 mt-5 shadow-lg ">
+    <footer class=" bg-success text-white pt-4 pb-4 mt-5 shadow-lg ">
       <div class="container text-center text-md-start">
         <div class="row text-center text-md-start">
           <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
@@ -22,38 +23,41 @@ import { CommonModule } from '@angular/common';
 
           <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
             <h5 class="text-uppercase mb-4 fw-bold text-white">Link Utili</h5>
-            <p>
-              <a
-                routerLink="/"
-                class="text-white text-decoration-none"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                >Home</a
-              >
-            </p>
-            <p>
-              <a
-                routerLink="/menu"
-                class="text-white text-decoration-none"
-                routerLinkActive="active"
-                >Menu</a
-              >
-            </p>
-            <p>
-              <a
-                routerLink="/carrello"
-                class="text-white text-decoration-none"
-                routerLinkActive="active"
-                >Carrello <i class="bi bi-cart"></i
-              ></a>
-            </p>
+            <ul class="list-unstyled">
+              <li class="mb-3">
+                <a
+                  routerLink="/"
+                  class="text-white text-decoration-none"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  >Home</a
+                >
+              </li>
+              <li class="mb-3">
+                <a
+                  routerLink="/menu"
+                  class="text-white text-decoration-none"
+                  routerLinkActive="active"
+                  >Menu</a
+                >
+              </li>
+              <li class="mb-3">
+                <a
+                  routerLink="/carrello"
+                  class="text-white text-decoration-none"
+                  routerLinkActive="active"
+                  >Carrello <i class="bi bi-cart"></i
+                ></a>
+              </li>
+            </ul>
           </div>
 
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
             <h5 class="text-uppercase mb-4 fw-bold text-white">Contatti</h5>
-            <p>
-              <i class="bi bi-house-door-fill me-3"></i> Via della pizza 27, Napoli
-            </p>
+            <address>
+              <i class="bi bi-house-door-fill me-3"></i> Via della pizza 27,
+              Napoli
+            </address>
             <p>
               <i class="bi bi-envelope-fill me-3"></i>
               info&#64;codicebasilico.it
@@ -79,14 +83,12 @@ import { CommonModule } from '@angular/common';
 
         <hr class="my-4" />
 
-
-          <p class="text-center text-white mx-auto">
-            © {{ currentYear }} Tutti i diritti riservati da
-            <a routerLink="/" class=" text-white text-decoration-none"
-              ><strong>Pizzeria Codice e Basilico</strong></a
-            >
-          </p>
-
+        <p class="text-center text-white mx-auto">
+          © {{ currentYear }} Tutti i diritti riservati da <br>
+          <a routerLink="/" class=" text-white text-decoration-none"
+            ><strong>Pizzeria Codice e Basilico</strong></a
+          >
+        </p>
       </div>
     </footer>
   `,
@@ -103,7 +105,6 @@ import { CommonModule } from '@angular/common';
     background-color: var(--bs-danger);
     color: var(--bs-light);
   }`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {
   currentYear: number = new Date().getFullYear();

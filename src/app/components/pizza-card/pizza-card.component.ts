@@ -90,11 +90,11 @@ export class PizzaCardComponent {
 
   pizzaQuantity: number = 1;
 
-  incrementQuantity(): void {
+  incrementQuantity() {
     this.pizzaQuantity++;
   }
 
-  decrementQuantity(): void {
+  decrementQuantity() {
     if (this.pizzaQuantity > 1) {
       this.pizzaQuantity--;
     }

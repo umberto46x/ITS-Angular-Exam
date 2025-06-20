@@ -1,8 +1,9 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Pizza, PizzaService } from '../../services/pizza.service';
+import { Pizza } from '../../services/pizza.service';
 import { CartService } from '../../services/cart.service';
+import { MenuService } from '../../states/menu.service';
 
 @Component({
   selector: 'umberto46-pizza-detail',
@@ -10,17 +11,7 @@ import { CartService } from '../../services/cart.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="container py-4 ">
-
-      <div *ngIf="isLoading" class="d-flex justify-content-center pt-5">
-        <div
-          class="spinner-border text-success"
-          style="width: 3rem; height: 3rem;"
-          role="status"
-        >
-          <span class="visually-hidden">Caricamento...</span>
-        </div>
-      </div>
-      <div *ngIf="!isLoading && pizza" class="card shadow-lg rounded-4 ">
+      <div *ngIf="pizza" class="card shadow-lg rounded-4 ">
         <div class="row g-0">
           <div class="col-md-6">
             <img
@@ -36,9 +27,7 @@ import { CartService } from '../../services/cart.service';
               {{ pizza.name }}
             </h1>
             <p class=" fs-4 flex-grow-1 text-center">
-              {{
-                pizza.description
-              }}
+              {{ pizza.description }}
             </p>
             <h3 class="text-danger fs-2 mb-4 text-center">
               {{ pizza.price | currency : 'EUR' }}
@@ -99,7 +88,8 @@ import { CartService } from '../../services/cart.service';
           </div>
         </div>
       </div>
-      <div *ngIf="!isLoading && !pizza"
+      <div
+        *ngIf="!pizza"
         class="text-center p-5 card shadow-sm rounded-4 mt-4"
       >
         <div class="display-1 mb-3">❓</div>
@@ -114,7 +104,6 @@ import { CartService } from '../../services/cart.service';
           <i class="bi bi-arrow-left-circle-fill me-2"></i> Vai al Menu
         </a>
       </div>
-
     </div>
   `,
   styles: ` .detail-img {
@@ -134,49 +123,54 @@ import { CartService } from '../../services/cart.service';
   }`,
 })
 export class PizzaDetailComponent implements OnInit {
+  route = inject(ActivatedRoute);
+  menuService = inject(MenuService);
+  cartService = inject(CartService);
+  location = inject(Location);
+  cdr = inject(ChangeDetectorRef);
+
+
+
   pizza: Pizza | undefined;
   pizzaQuantity: number = 1;
   showAddedToCartMessage: boolean = false;
-  requestedPizzaId: string | null = null;
-  isLoading: boolean = true;
 
-  constructor(
-    private route: ActivatedRoute,
-    private pizzaService: PizzaService,
-    private cartService: CartService,
-    private location: Location,
-    private cdr: ChangeDetectorRef
-  ) {}
+
+
+
 
   ngOnInit(): void {
-    this.requestedPizzaId = this.route.snapshot.paramMap.get('id');
-    if (this.requestedPizzaId) {
-      const pizzaId = +this.requestedPizzaId;
+
+    this.loadPizzaById();
+
+  }
+
+
+
+  loadPizzaById(): void {
+
+     const requestedPizzaId = this.route.snapshot.paramMap.get('id');
+
+    if (requestedPizzaId) {
+      const pizzaId = Number(requestedPizzaId);
       if (isNaN(pizzaId)) {
         console.warn(
-          `ID della pizza non valido: ${this.requestedPizzaId}. Deve essere un numero.`
+          `ID della pizza non valido: ${requestedPizzaId}. Deve essere un numero.`
         );
         this.pizza = undefined;
-        this.isLoading = false;
-        return;
-      }
-
-      this.pizzaService.getPizzaById(pizzaId).subscribe(
-        (data) => {
-          this.pizza = data;
-          this.isLoading = false;
-          this.cdr.markForCheck();
-        },
-        (error) => {
-          console.error('Errore nel recupero della pizza:', error);
+      }else{
+        this.pizza = this.menuService.getItemById(pizzaId);
+        if (!this.pizza) {
+          console.warn('Pizza non trovata nel menu:', pizzaId);
           this.pizza = undefined;
-          this.isLoading = false;
+          this.cdr.markForCheck();
+        } else {
+          this.cdr.markForCheck();
         }
-      );
-    } else {
+      }
+    }else{
       console.warn('ID della pizza non fornito nella route.');
       this.pizza = undefined;
-      this.isLoading = false;
     }
   }
 
@@ -193,7 +187,6 @@ export class PizzaDetailComponent implements OnInit {
   addToCart(): void {
     if (this.pizza) {
       this.cartService.addToCart(this.pizza, this.pizzaQuantity);
-
       this.showAddedToCartMessage = true;
       setTimeout(() => {
         this.showAddedToCartMessage = false;

@@ -171,4 +171,9 @@ import { CommonModule } from '@angular/common';
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
     }`,
 })
-export class HomeComponent {}
+export class HomeComponent {
+
+
+
+
+}

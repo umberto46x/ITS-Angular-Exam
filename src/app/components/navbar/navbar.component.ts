@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
@@ -8,7 +8,9 @@ import { CommonModule } from '@angular/common';
   imports: [RouterLink, RouterLinkActive, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm fixed-top mb-5">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm fixed-top mb-5"
+    >
       <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center" routerLink="/">
           <span class="fw-bold fs-3">🍕 Pizzeria Codice e Basilico</span>
@@ -25,11 +27,11 @@ import { CommonModule } from '@angular/common';
                 <i class="bi bi-cart"></i>
 
                 <span
-                  *ngIf="cartItemCount()"
+                  *ngIf="this.cartService.cartItemCount()"
                   class="badge bg-danger rounded-pill position-absolute top-45 start-95 translate-middle"
-                  [class.d-none]="cartItemCount() === 0"
+                  [class.d-none]="this.cartService.cartItemCount() === 0"
                 >
-                  {{ cartItemCount() }}
+                  {{ this.cartService.cartItemCount() }}
                   <span class="visually-hidden">articoli nel carrello</span>
                 </span>
               </a>
@@ -73,11 +75,11 @@ import { CommonModule } from '@angular/common';
                 <i class="bi bi-cart"></i>
 
                 <span
-                  *ngIf="cartItemCount()"
+                  *ngIf="this.cartService.cartItemCount()"
                   class="badge bg-danger rounded-pill position-absolute top-45 start-95 translate-middle"
-                  [class.d-none]="cartItemCount() === 0"
+                  [class.d-none]="this.cartService.cartItemCount() === 0"
                 >
-                  {{ cartItemCount() }}
+                  {{ this.cartService.cartItemCount() }}
                   <span class="visually-hidden">articoli nel carrello</span>
                 </span>
               </a>
@@ -91,9 +93,8 @@ import { CommonModule } from '@angular/common';
   styles: ``,
 })
 export class NavbarComponent {
-  cartItemCount: Signal<number>;
 
-  constructor(private cartService: CartService) {
-    this.cartItemCount = this.cartService.cartItemCount;
-  }
+  cartService = inject(CartService);
+
+
 }

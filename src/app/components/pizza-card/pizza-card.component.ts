@@ -9,6 +9,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { Pizza } from '../../models/Pizza';
 
+
 @Component({
   selector: 'umberto46-pizza-card',
   imports: [CommonModule, RouterLink],
@@ -47,10 +48,10 @@ import { Pizza } from '../../models/Pizza';
             </button>
             <input
               type="text"
-              class="form-control text-center fs-4 quantity-input"
+              class="form-control text-center fs-4 quantity-input "
               [value]="pizzaQuantity"
               readonly
-              style="width: 50px; border-color: #dee2e6;"
+              style="width: 75px; border-color: #dee2e6;"
             />
             <button
               class="btn btn-danger   fs-4 rounded-end-pill px-4 px-lg-3  "
@@ -65,16 +66,6 @@ import { Pizza } from '../../models/Pizza';
             </button>
           </div>
         </div>
-        <button
-          class="btn btn-success  btn-lg mt-2 w-100 rounded-pill"
-          (click)="
-            $event.preventDefault();
-            $event.stopPropagation();
-            onAddButtonClick()
-          "
-        >
-          Aggiungi {{ pizzaQuantity }} al Carrello
-        </button>
       </div>
     </div>
   `,
@@ -82,29 +73,35 @@ import { Pizza } from '../../models/Pizza';
 })
 export class PizzaCardComponent {
   @Input() pizzaData!: Pizza;
+  @Input() pizzaQuantity!: number;
 
+  @Output() updateCartEvent = new EventEmitter<{
+    pizzaId: number;
+    quantity: number;
+  }>();
   @Output() addToCartEvent = new EventEmitter<{
     pizza: Pizza;
     quantity: number;
   }>();
 
-  pizzaQuantity: number = 1;
-
   incrementQuantity() {
-    this.pizzaQuantity++;
+    if (this.pizzaQuantity){
+      this.updateCartEvent.emit({
+        pizzaId: this.pizzaData.id,
+        quantity: this.pizzaQuantity + 1,
+      });
+    }else{
+      this.addToCartEvent.emit({pizza: this.pizzaData, quantity: 1});
+    }
+
   }
 
   decrementQuantity() {
-    if (this.pizzaQuantity > 1) {
-      this.pizzaQuantity--;
+    if (this.pizzaQuantity) {
+      this.updateCartEvent.emit({
+        pizzaId: this.pizzaData.id,
+        quantity: this.pizzaQuantity - 1,
+      });
     }
-  }
-
-  onAddButtonClick() {
-    this.addToCartEvent.emit({
-      pizza: this.pizzaData,
-      quantity: this.pizzaQuantity,
-    });
-    this.pizzaQuantity = 1;
   }
 }

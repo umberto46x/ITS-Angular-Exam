@@ -1,7 +1,7 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Pizza } from '../../services/pizza.service';
+import { Pizza } from '../../models/Pizza';
 import { CartService } from '../../services/cart.service';
 import { MenuService } from '../../states/menu.service';
 
@@ -49,7 +49,7 @@ import { MenuService } from '../../states/menu.service';
                 <input
                   type="text"
                   class="form-control text-center p-2  "
-                  [value]="pizzaQuantity"
+                  [value]="quantity"
                   readonly
                 />
                 <button
@@ -131,8 +131,8 @@ export class PizzaDetailComponent implements OnInit {
 
 
 
-  pizza: Pizza | undefined;
-  pizzaQuantity: number = 1;
+  pizza: Pizza | undefined = undefined
+  quantity: number = 1;
   showAddedToCartMessage: boolean = false;
 
 
@@ -157,41 +157,37 @@ export class PizzaDetailComponent implements OnInit {
         console.warn(
           `ID della pizza non valido: ${requestedPizzaId}. Deve essere un numero.`
         );
-        this.pizza = undefined;
       }else{
         this.pizza = this.menuService.getItemById(pizzaId);
         if (!this.pizza) {
           console.warn('Pizza non trovata nel menu:', pizzaId);
-          this.pizza = undefined;
-          this.cdr.markForCheck();
         } else {
           this.cdr.markForCheck();
         }
       }
     }else{
       console.warn('ID della pizza non fornito nella route.');
-      this.pizza = undefined;
     }
   }
 
   incrementQuantity(): void {
-    this.pizzaQuantity++;
+    this.quantity++;
   }
 
   decrementQuantity(): void {
-    if (this.pizzaQuantity > 1) {
-      this.pizzaQuantity--;
+    if (this.quantity > 1) {
+      this.quantity--;
     }
   }
 
   addToCart(): void {
     if (this.pizza) {
-      this.cartService.addToCart(this.pizza, this.pizzaQuantity);
+      this.cartService.addToCart(this.pizza, this.quantity);
       this.showAddedToCartMessage = true;
       setTimeout(() => {
         this.showAddedToCartMessage = false;
       }, 3000);
-      this.pizzaQuantity = 1;
+      this.quantity = 1;
     }
   }
 

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { PizzaCardComponent } from '../../components/pizza-card/pizza-card.component';
 import { CartService } from '../../services/cart.service';
-import { Pizza } from '../../services/pizza.service';
 import { MenuService } from '../../states/menu.service';
 
 @Component({

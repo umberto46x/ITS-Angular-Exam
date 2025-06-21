@@ -27,11 +27,11 @@ import { CommonModule } from '@angular/common';
                 <i class="bi bi-cart"></i>
 
                 <span
-                  *ngIf="this.cartService.cartItemCount()"
+                  *ngIf="this.cartService.getCartItemCount()"
                   class="badge bg-danger rounded-pill position-absolute top-45 start-95 translate-middle"
-                  [class.d-none]="this.cartService.cartItemCount() === 0"
+                  [class.d-none]="this.cartService.getCartItemCount() === 0"
                 >
-                  {{ this.cartService.cartItemCount() }}
+                  {{ this.cartService.getCartItemCount() }}
                   <span class="visually-hidden">articoli nel carrello</span>
                 </span>
               </a>
@@ -75,11 +75,11 @@ import { CommonModule } from '@angular/common';
                 <i class="bi bi-cart"></i>
 
                 <span
-                  *ngIf="this.cartService.cartItemCount()"
+                  *ngIf="this.cartService.getCartItemCount()"
                   class="badge bg-danger rounded-pill position-absolute top-45 start-95 translate-middle"
-                  [class.d-none]="this.cartService.cartItemCount() === 0"
+                  [class.d-none]="this.cartService.getCartItemCount() === 0"
                 >
-                  {{ this.cartService.cartItemCount() }}
+                  {{ this.cartService.getCartItemCount() }}
                   <span class="visually-hidden">articoli nel carrello</span>
                 </span>
               </a>
@@ -93,8 +93,5 @@ import { CommonModule } from '@angular/common';
   styles: ``,
 })
 export class NavbarComponent {
-
   cartService = inject(CartService);
-
-
 }

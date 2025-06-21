@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { Pizza, PizzaService } from '../services/pizza.service';
+import {PizzaService } from '../services/pizza.service';
+import { Pizza } from '../models/Pizza';
 
 @Injectable({
   providedIn: 'root'

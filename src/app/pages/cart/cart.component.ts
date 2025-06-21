@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy, Signal, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { CartItem, CartService } from '../../services/cart.service';
+import {CartService } from '../../services/cart.service';
+import { CartItem } from '../../models/CartItem';
 
 
 @Component({
@@ -87,7 +88,7 @@ import { CartItem, CartService } from '../../services/cart.service';
           <h4 class="mb-3 mb-md-0">
             Totale:
             <strong class="text-success display-6 fw-bold">{{
-              this.cartService.total() | currency : 'EUR'
+              this.cartService.getTotal() | currency : 'EUR'
             }}</strong>
           </h4>
           <div class="d-flex flex-column flex-md-row align-items-center">
@@ -244,7 +245,7 @@ export class CartComponent {
   showThankYouModal: boolean = false;
   showClearCartConfirmModal: boolean = false;
 
-  router = inject(Router);
+  routerService = inject(Router);
   cartService = inject(CartService);
 
   incrementQuantity(item: CartItem): void {
@@ -266,7 +267,7 @@ export class CartComponent {
   closeThankYouModal(): void {
     this.showThankYouModal = false;
     this.cartService.clearCart();
-    this.router.navigate(['/']);
+    this.routerService.navigate(['/']);
   }
 
   openClearCartConfirmModal(): void {

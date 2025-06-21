@@ -7,7 +7,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Pizza } from '../../services/pizza.service';
+import { Pizza } from '../../models/Pizza';
 
 @Component({
   selector: 'umberto46-pizza-card',

@@ -6,12 +6,12 @@ import {
   WritableSignal,
   Signal,
 } from '@angular/core';
-import { Pizza } from './pizza.service';
 
-export interface CartItem {
-  pizza: Pizza;
-  quantity: number;
-}
+
+import { CartItem } from '../models/CartItem';
+import { Pizza } from '../models/Pizza';
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -22,14 +22,14 @@ export class CartService {
   private _cartItems: WritableSignal<CartItem[]> = signal([]);
   cartItems: Signal<CartItem[]> = this._cartItems.asReadonly();
 
-  total: Signal<number> = computed(() => {
+  getTotal: Signal<number> = computed(() => {
     return this.cartItems().reduce(
       (sum, item) => sum + item.pizza.price * item.quantity,
       0
     );
   });
 
-  cartItemCount: Signal<number> = computed(() => {
+  getCartItemCount: Signal<number> = computed(() => {
     return this.cartItems().reduce((sum, item) => sum + item.quantity, 0);
   });
 

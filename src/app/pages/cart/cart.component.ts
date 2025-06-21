@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy, Signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { CartItem, CartService } from '../../services/cart.service';
+import {CartService } from '../../services/cart.service';
+import { CartItem } from '../../models/CartItem';
 
 
 @Component({
@@ -14,12 +15,13 @@ import { CartItem, CartService } from '../../services/cart.service';
         Il tuo Carrello
       </h2>
 
-      <div *ngIf="cartItems().length > 0; else emptyCart"
+      <div
+        *ngIf="this.cartService.cartItems().length > 0"
         class="card shadow-lg rounded-4"
       >
         <ul class="list-group list-group-flush border-0">
           <li
-            *ngFor="let item of cartItems()"
+            *ngFor="let item of this.cartService.cartItems()"
             class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-center py-3 px-4"
           >
             <div class="d-flex align-items-center mb-3 mb-md-0">
@@ -86,7 +88,7 @@ import { CartItem, CartService } from '../../services/cart.service';
           <h4 class="mb-3 mb-md-0">
             Totale:
             <strong class="text-success display-6 fw-bold">{{
-              total() | currency : 'EUR'
+              this.cartService.getTotal() | currency : 'EUR'
             }}</strong>
           </h4>
           <div class="d-flex flex-column flex-md-row align-items-center">
@@ -106,22 +108,23 @@ import { CartItem, CartService } from '../../services/cart.service';
         </div>
       </div>
 
-      <ng-template #emptyCart>
-        <div class="text-center p-5 card shadow-sm rounded-4">
-          <div class="display-1 mb-3">🛒</div>
-          <h3>Il tuo carrello è vuoto!</h3>
-          <p class="lead text-muted fs-3">
-            Aggiungi alcune delle nostre deliziose pizze per iniziare il tuo
-            ordine.
-          </p>
-          <a
-            routerLink="/menu"
-            class="btn btn-danger btn-lg mt-3 rounded-pill px-4 py-2"
-          >
-            <i class="bi bi-arrow-left-circle-fill me-2"></i> Vai al Menu
-          </a>
-        </div>
-      </ng-template>
+      <div
+        *ngIf="cartService.cartItems().length == 0"
+        class="text-center p-5 card shadow-sm rounded-4"
+      >
+        <div class="display-1 mb-3">🛒</div>
+        <h3>Il tuo carrello è vuoto!</h3>
+        <p class="lead text-muted fs-3">
+          Aggiungi alcune delle nostre deliziose pizze per iniziare il tuo
+          ordine.
+        </p>
+        <a
+          routerLink="/menu"
+          class="btn btn-danger btn-lg mt-3 rounded-pill px-4 py-2"
+        >
+          <i class="bi bi-arrow-left-circle-fill me-2"></i> Vai al Menu
+        </a>
+      </div>
     </div>
 
     <div
@@ -191,7 +194,7 @@ import { CartItem, CartService } from '../../services/cart.service';
         <div class="modal-content rounded-4 shadow-lg border-0">
           <div class="modal-header border-bottom-0 pb-0">
             <h5
-              class="modal-title fs-5 fw-bold text-danger"
+              class="modal-title fs-5 fw-bold text-danger "
               id="clearCartModalLabel"
             >
               Attenzione!
@@ -239,15 +242,11 @@ import { CartItem, CartService } from '../../services/cart.service';
   `,
 })
 export class CartComponent {
-  cartItems: Signal<CartItem[]>;
-  total: Signal<number>;
   showThankYouModal: boolean = false;
   showClearCartConfirmModal: boolean = false;
 
-  constructor(private cartService: CartService, private router: Router) {
-    this.cartItems = this.cartService.cartItems;
-    this.total = this.cartService.total;
-  }
+  routerService = inject(Router);
+  cartService = inject(CartService);
 
   incrementQuantity(item: CartItem): void {
     this.cartService.updateItemQuantity(item.pizza.id, item.quantity + 1);
@@ -268,7 +267,7 @@ export class CartComponent {
   closeThankYouModal(): void {
     this.showThankYouModal = false;
     this.cartService.clearCart();
-    this.router.navigate(['/']);
+    this.routerService.navigate(['/']);
   }
 
   openClearCartConfirmModal(): void {

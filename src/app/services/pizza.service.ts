@@ -1,33 +1,24 @@
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Pizza } from '../models/Pizza';
 
-export interface Pizza {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-  description: string;
-}
+
 
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class PizzaService {
-  private apiUrl = 'https://my-json-server.typicode.com/zoelounge/menupizza/cards';
 
-  constructor(private http: HttpClient) { }
+
+export class PizzaService {
+  http = inject(HttpClient);
 
   getPizzas(): Observable<Pizza[]> {
-    return this.http.get<Pizza[]>(this.apiUrl);
+    return this.http.get<Pizza[]>('https://my-json-server.typicode.com/zoelounge/menupizza/cards');
 
   }
 
-  getPizzaById(id: number): Observable<Pizza | undefined> {
-    return this.http.get<Pizza>(this.apiUrl+ `/${id}`)
-  }
 }

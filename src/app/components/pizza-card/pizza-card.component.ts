@@ -7,7 +7,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Pizza } from '../../services/pizza.service';
+import { Pizza } from '../../models/Pizza';
 
 @Component({
   selector: 'umberto46-pizza-card',
@@ -90,11 +90,11 @@ export class PizzaCardComponent {
 
   pizzaQuantity: number = 1;
 
-  incrementQuantity(): void {
+  incrementQuantity() {
     this.pizzaQuantity++;
   }
 
-  decrementQuantity(): void {
+  decrementQuantity() {
     if (this.pizzaQuantity > 1) {
       this.pizzaQuantity--;
     }

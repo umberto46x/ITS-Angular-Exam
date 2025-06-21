@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
     </div>
 
     <div class="container my-5">
-      <h2 class="text-center mb-4 text-success fs-1 fw-bold">
+      <h2 class="text-center mb-4 text-success display-6 fw-bold">
         Scopri di più sulla nostra passione
       </h2>
       <div
@@ -131,9 +131,36 @@ import { CommonModule } from '@angular/common';
       transform: translateY(-2px);
     }
     .carousel-img {
-      max-height: 500px;
+      max-height: 175px;
       object-fit: cover;
     }
+    @media (min-width: 425px) {
+      .carousel-img {
+      max-height: 250px;
+
+    }
+    }
+    @media (min-width: 768px) {
+      .carousel-img {
+      max-height: 300px;
+
+    }
+    }
+    @media (min-width: 1024px) {
+      .carousel-img {
+      max-height: 400px;
+
+    }
+    }
+    @media (min-width: 1440px) {
+      .carousel-img {
+      max-height: 500px;
+
+    }
+    }
+
+
+
     .carousel-caption {
       background: rgba(0, 0, 0, 0.6);
       border-radius: 0.5rem;
@@ -144,4 +171,9 @@ import { CommonModule } from '@angular/common';
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
     }`,
 })
-export class HomeComponent {}
+export class HomeComponent {
+
+
+
+
+}

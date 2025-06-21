@@ -33,7 +33,8 @@ export class CartService {
     return this.cartItems().reduce((sum, item) => sum + item.quantity, 0);
   });
 
-
+getCartItemById(pizzaId: number): CartItem | undefined {
+    return this.cartItems().find((item) => item.pizza.id === pizzaId);}
 
   addToCart(pizzaToAdd: Pizza, quantity: number = 1) {
     this._cartItems.update((currentItems) => {

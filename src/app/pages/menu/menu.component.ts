@@ -15,9 +15,14 @@ import { MenuService } from '../../states/menu.service';
       <div class="col" *ngFor="let pizza of menuService.getMenu()">
         <umberto46-pizza-card
           [pizzaData]="pizza"
+          [pizzaQuantity]="this.cartService.getCartItemById(pizza.id)?.quantity || 0"
+          (updateCartEvent)="
+            this.cartService.updateItemQuantity($event.pizzaId,$event.quantity)
+          "
           (addToCartEvent)="
             this.cartService.addToCart($event.pizza, $event.quantity)
           "
+
         ></umberto46-pizza-card>
       </div>
     </div>
@@ -27,5 +32,4 @@ import { MenuService } from '../../states/menu.service';
 export class MenuComponent {
   cartService = inject(CartService);
   menuService = inject(MenuService);
-
 }
